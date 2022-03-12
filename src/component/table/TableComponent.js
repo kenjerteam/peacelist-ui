@@ -15,8 +15,9 @@ export class TableComponent extends React.Component {
                         <tbody>
                         {this.props.resources.map((resource, index) => {
                             return <tr id={index}>
-                                <td>{this.defineType(resource.type)}</td>
+                                <td>{this.mapIcon(resource.type)}</td>
                                 <td>{resource.content}</td>
+                                <td>{resource.approved}</td>
                             </tr>
                         })}
                         </tbody>
@@ -26,7 +27,7 @@ export class TableComponent extends React.Component {
         )
     }
 
-    defineType(type) {
+    mapIcon(type) {
         switch (type) {
             case 'WEB_SITE': return WebSiteIcon;
             case 'PERSON': return PersonIcon;

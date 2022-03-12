@@ -5,14 +5,12 @@ import React from 'react';
 
 export class ToolbarComponent extends React.Component {
 
-    showModal = () => this.props.toggleShow(true);
-
     render() {
         return (
             <Container>
                 <Row>
                     <Col>
-                        <Button onClick={this.showModal} size="lg">
+                        <Button onClick={this.props.toggleShow} size="lg">
                             Suggest a resource
                         </Button>
                     </Col>

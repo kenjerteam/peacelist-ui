@@ -14,20 +14,24 @@ export class SuggestResourceModalComponent extends React.Component {
 
     validUrl = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
-    state = {
-        show: this.props.show,
-        types: [],
-        resource: {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            types: [],
+            resource: {}
+        }
+        this.submit = this.submit.bind(this);
+        this.selectType= this.selectType.bind(this);
+        this.onContentInput = this.onContentInput.bind(this);
     }
 
-    toggleShow = () => this.setState({show: !this.state.show})
 
     submit = () => {
         if (this.state.resource.type === 'WEB_SITE' && !this.state.content.matches(this.validUrl)) {
             return;
         }
-        this.toggleShow()
-        this.props.saveResource(this.state.resource)
+        this.props.toggleShow();
+        this.props.saveResource(this.state.resource);
     }
 
     selectType = (type) => {
@@ -40,7 +44,7 @@ export class SuggestResourceModalComponent extends React.Component {
 
     render() {
         return (
-            <Modal show={this.state.show}>
+            <Modal show={this.props.shown} centered>
                 <ModalHeader>
                     Suggest a resource
                 </ModalHeader>
@@ -51,7 +55,7 @@ export class SuggestResourceModalComponent extends React.Component {
                             variant="outline-secondary"
                             title="Help type"
                             id="help-type">
-                            {this.props.resources.map((it, index) => {
+                            {this.props.types.map((it, index) => {
                                 return <DropdownItem onInput={this.selectType} key={index}>{it.type}</DropdownItem>
                             })}
                         </DropdownButton>
