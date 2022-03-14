@@ -4,6 +4,7 @@ import { ReactComponent as ContactIcon } from "../common/icons/phone.svg";
 import { ReactComponent as WebSiteIcon } from "../common/icons/web.svg";
 import { ReactComponent as PersonIcon } from "../common/icons/helper.svg";
 import React from "react";
+import Button from "react-bootstrap/Button";
 
 export class TableComponent extends React.Component {
 
@@ -11,11 +12,11 @@ export class TableComponent extends React.Component {
         return (
             <Container>
                 <Row>
-                    <Table className="Table-main">
+                    <Table className="Table-main" size="sm">
                         <tbody>
                         {this.props.resources.map((resource, index) => {
-                            return <tr id={index}>
-                                <td>{this.mapIcon(resource.type)}</td>
+                            return <tr key={resource.id} id={"resource" + resource.id}>
+                                <td>{this.mapIcon(resource.type.type)}</td>
                                 <td>{resource.content}</td>
                                 <td>{resource.approved}</td>
                             </tr>
@@ -29,9 +30,9 @@ export class TableComponent extends React.Component {
 
     mapIcon(type) {
         switch (type) {
-            case 'WEB_SITE': return WebSiteIcon;
-            case 'PERSON': return PersonIcon;
-            default : return ContactIcon;
+            case 'WEB_SITE': return <WebSiteIcon/>;
+            case 'PERSON': return <PersonIcon/>;
+            default : return <ContactIcon/>;
         }
     }
 }

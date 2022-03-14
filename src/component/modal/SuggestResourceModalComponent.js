@@ -1,10 +1,11 @@
 import {
     DropdownButton,
     FormControl,
-    InputGroup, Modal,
+    FormSelect,
+    InputGroup,
     ModalBody,
     ModalFooter,
-    ModalHeader
+    ModalHeader, ModalTitle
 } from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import Button from "react-bootstrap/Button";
@@ -26,39 +27,59 @@ export class SuggestResourceModalComponent extends React.Component {
     }
 
 
-    submit = () => {
-        if (this.state.resource.type === 'WEB_SITE' && !this.state.content.matches(this.validUrl)) {
+    submit() {
+        if (this.state.content === "Help type") {
             return;
         }
-        this.props.toggleShow();
-        this.props.saveResource(this.state.resource);
+
+        if (this.state.resource.type === 'WEB_SITE' && !this.state.resource.content.matches(this.validUrl)) {
+            return;
+        }
+        this.props.saveResource(this.state.resource)
+            .then(this.props.toggleHide)
+            .catch(this.props.showError);
     }
 
-    selectType = (type) => {
-        this.setState({resource: {type: type}})
+    selectType(e) {
+        this.setState({
+            resource: {
+                type: {
+                    type: e.target.value
+                },
+                content: this.state.resource.content,
+                approved: false
+            },
+            types: this.state.types
+        })
     }
 
-    onContentInput = (content) => {
-        this.setState({resource: {content: content}})
+    onContentInput(e) {
+        this.setState({
+            resource: {
+                type: {
+                    type: this.state.resource.type.type
+                },
+                content: e.target.value,
+                approved: false
+            },
+            types: this.state.types
+        })
     }
 
     render() {
         return (
-            <Modal show={this.props.shown} centered>
+            <div>
                 <ModalHeader>
                     Suggest a resource
                 </ModalHeader>
                 <ModalBody>
                     <InputGroup>
-                        <DropdownButton
-                            aria-required={"true"}
-                            variant="outline-secondary"
-                            title="Help type"
-                            id="help-type">
+                        <FormSelect defaultValue="help-type-default" onChange={this.selectType}>
+                            <option id="help-type-default">Help type</option>
                             {this.props.types.map((it, index) => {
-                                return <DropdownItem onInput={this.selectType} key={index}>{it.type}</DropdownItem>
+                                return <option key={index}>{it.type}</option>
                             })}
-                        </DropdownButton>
+                        </FormSelect>
                         <FormControl placeholder="Content" onInput={this.onContentInput} aria-required={"true"}/>
                     </InputGroup>
                 </ModalBody>
@@ -69,7 +90,7 @@ export class SuggestResourceModalComponent extends React.Component {
                         </Button>
                     </InputGroup>
                 </ModalFooter>
-            </Modal>
+            </div>
         )
     }
 }

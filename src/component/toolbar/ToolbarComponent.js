@@ -19,6 +19,9 @@ export class ToolbarComponent extends React.Component {
                         <Alert dismissible show={this.props.showSuccess} variant={"info"}>
                             Suggestion is on review! Thank you!
                         </Alert>
+                        <Alert dismissible show={this.props.showError} variant={"danger"}>
+                            Something wrong happened :(
+                        </Alert>
                     </Col>
                 </Row>
             </Container>
