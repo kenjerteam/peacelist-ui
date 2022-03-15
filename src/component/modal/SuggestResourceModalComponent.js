@@ -1,13 +1,4 @@
-import {
-    DropdownButton,
-    FormControl,
-    FormSelect,
-    InputGroup,
-    ModalBody,
-    ModalFooter,
-    ModalHeader, ModalTitle
-} from "react-bootstrap";
-import DropdownItem from "react-bootstrap/DropdownItem";
+import {FormControl, FormSelect, InputGroup, ModalBody, ModalFooter, ModalHeader} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import React from "react";
 

@@ -11,7 +11,7 @@ export class ToolbarComponent extends React.Component {
                 <Row>
                     <Col>
                         <Button onClick={this.props.toggleShow} size="lg">
-                            Suggest a resource
+                            Suggest
                         </Button>
                     </Col>
                     <Col></Col>

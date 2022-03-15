@@ -46,13 +46,16 @@ class ContainerComponent extends React.Component {
 
     async saveResource(data) {
         await saveResource(data)
-            .then(() => this.setState({
-                showModal: this.state.showModal,
-                showSuccess: true,
-                showError: false,
-                resourcesTypes: this.state.resourcesTypes,
-                resources: this.state.resources
-            }))
+            .then((data) => {
+                this.state.resources.push(data)
+                this.setState({
+                    showModal: this.state.showModal,
+                    showSuccess: true,
+                    showError: false,
+                    resourcesTypes: this.state.resourcesTypes,
+                    resources: this.state.resources
+                })
+            })
             .catch(e => this.setState({
                 showModal: this.state.showModal,
                 showSuccess: false,
@@ -85,9 +88,10 @@ class ContainerComponent extends React.Component {
     render() {
         return (
             <Container className="p-3">
+                <EmptyComponent spacing={1}/>
                 <ToolbarComponent toggleShow={this.toggleShow} showSuccess={this.state.showSuccess}
                                   showError={this.state.showError}/>
-                <EmptyComponent spacing={4}/>
+                <EmptyComponent spacing={3}/>
                 <TableComponent resources={this.state.resources != null && true ? this.state.resources : []}/>
                 <Modal show={this.state.showModal} centered>
                     <SuggestResourceModalComponent showError={this.state.showError} saveResource={this.saveResource}
